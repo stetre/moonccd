@@ -1,0 +1,29 @@
+
+== Introduction
+
+MoonCCD is an almost one-to-one Lua binding library to the libccd collision detection library.
+This means that by and large, it is intended to be used as the underlying libccd (apart from coding in Lua, of course).
+
+////
+@@TODO: for ccdpar object
+Objects are *garbage collected at exit* (which includes on error), and automatically
+deleted at the C level, so there is no need to explicitly invoke their _free_(&nbsp;) methods at exit for cleanup. 
+
+Apart from at exit, however, objects are not automatically garbage collected 
+footnote:[Objects are anchored to the Lua registry at their creation, so even if the script does not
+have references to an object, a reference always exists on the registry and this prevents the 
+GC to collect it.]
+and one must release them explicitly when needed, e.g. to release resources when the
+application is not exiting and some objects are no longer needed.
+
+Releasing an object causes the automatic (pre) destruction of all its children
+objects, and the invalidation of any reference to the object and to its children.
+footnote:[It is good practice to not leave invalid references to objects around, because
+they prevent the GC to collect the memory associated with the userdata.]
+////
+
+If not stated otherwise, *on error* all MoonCCD functions raise a 
+http://www.lua.org/manual/5.3/manual.html#lua_error[Lua error]. 
+If needed, this behaviour can be overridden by wrapping function calls in the standard Lua 
+http://www.lua.org/manual/5.3/manual.html#pdf-pcall[pcall](&nbsp;).
+

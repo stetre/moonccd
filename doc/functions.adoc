@@ -1,0 +1,54 @@
+
+[[functions]]
+== Collision detection functions
+
+In the following, the <<ccdpar, _ccdpar_>> argument contains the parameters
+and support functions to be used by the collision detection functions (which are also
+available as methods of the _ccdpar_ object itself). 
+The arguments _obj~1~_ and _obj~2~_ are the user-defined geometrical representations of the two
+possibly-colliding convex objects, and may be of any Lua type (for example a table
+including the type, dimensions, position, and orientation of the object).
+
+* _boolean_ = *gjk_intersect*(<<ccdpar, _ccdpar_>>, _obj~1~_, _obj~2~_) +
+_boolean_ = *mpr_intersect*(<<ccdpar, _ccdpar_>>, _obj~1~_, _obj~2~_) +
+_boolean_ = <<ccdpar, _ccdpar_>>++:++*gjk_intersect*(_obj~1~_, _obj~2~_) +
+_boolean_ = <<ccdpar, _ccdpar_>>++:++*mpr_intersect*(_obj~1~_, _obj~2~_) +
+[small]#Return _true_ if the two objects intersect, _false_ otherwise.#
+
+* _boolean_, _sep_ = *gjk_separate*(<<ccdpar, _ccdpar_>>, _obj~1~_, _obj~2~_) +
+* _boolean_, _sep_ = <<ccdpar, _ccdpar_>>++:++*gjk_separate*(_obj~1~_, _obj~2~_) +
+[small]#Return _true_ followed by the separation vector _sep_ if the two obiects intersect. Return _false_ otherwise. +
+_sep_: <<vec3, vec3>>, represents the minimal translation of _obj~2~_ to separate it from _obj~1~_.#
+
+* _boolean_, _depth_, _dir_, _pos_ = *gjk_penetration*(<<ccdpar, _ccdpar_>>, _obj~1~_, _obj~2~_) +
+_boolean_, _depth_, _dir_, _pos_ = *mpr_penetration*(<<ccdpar, _ccdpar_>>, _obj~1~_, _obj~2~_) +
+_boolean_, _depth_, _dir_, _pos_ = <<ccdpar, _ccdpar_>>++:++*gjk_penetration*(_obj~1~_, _obj~2~_) +
+_boolean_, _depth_, _dir_, _pos_ = <<ccdpar, _ccdpar_>>++:++*mpr_penetration*(_obj~1~_, _obj~2~_) +
+[small]#Return _true_ followed by penetration information if the two obiects intersect. Return _false_ otherwise. +
+_depth_ (float), _dir_ (<<vec3, vec3>>), _pos_ (<<vec3, vec3>>): penetration depth, direction and position in global coordinates. +
+(By translating _obj~2~_ in the given direction, the two object should have touching contact.)#
+
+
+[[ccdpar]]
+* _ccdpar_ = *new*(_par_) +
+[small]#Creates a new object encapsulating a _ccd_t_ structure, initialized with the given parameters. +
+The _par_ argument is a table containing the fields below, whose meanings are the same as those of the corresponding fields of the _ccd_t_ struct. +
+All fields are optional in this constructor, but they may be required by the collision detection function the _ccpar_ is passed to. +
+_par.max_iterations_: integer (defaults to infinitely many). +
+_par.epa_tolerance_: float (defaults to 10^-4^). +
+_par.mpr_tolerance_: float (defaults to 10^-4^). +
+_par.dist_tolerance_: float (defaults to 10^-6^). +
+_par.first_dir_: function, called as *dir = f(obj~1~, obj~2~)*. +
+_par.center1_: function, called as *center = f(obj~1~)*. +
+_par.center2_: function, called as *center = f(obj~2~)*. +
+_par.support1_: function called as *support = f(obj~1~, dir)*. +
+_par.support2_: function called as *support = f(obj~2~, dir)*. +
+_dir_, _center_, _support_: <<vec3, vec3>>. +
+_obj~1~_, _obj~2~_: any Lua type (user defined).#
+
+
+* *_free_*(_ccdpar_) +
+_ccdpar_++:++*free*( ) +
+[small]#Free the given _ccdpar_ object. +
+(The object is automatically free'd at exit, including on error.)#
+

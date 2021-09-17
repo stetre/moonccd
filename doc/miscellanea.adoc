@@ -1,0 +1,48 @@
+
+[[float_utils]]
+== Float utilities
+
+* _s_ = *sign*(_a_) +
+_boolean_ = *is_zero*(_a_) +
+_boolean_ = *eq*(_a_, _b_) +
+[small]#_a_, _b_: float. +
+_s_: -1, 0, or 1.#
+
+[[vec_utils]]
+== Vector utilities
+
+* _v_ = *origin*( ) +
+_{<<vec3, vec3>>}_ = *points_on_sphere*( ) +
+_boolean_ = *veq*(_v~1~_, _v~2~_) +
+_float_ = *vlen2*(_v_) +
+_float_ = *vdist2*(_v~1~_, _v~2~_) +
+_v_ = *vcopy*(_v~1~_) +
+_v_ = *vsub*(_v~1~_, _v~2~_) +
+_v_ = *vadd*(_v~1~_, _v~2~_) +
+_v_ = *vscale*(_v~1~_, _float_) +
+_v_ = *vnormalize*(_v_) +
+_float_ = *vdot*(_v~1~_, _v~2~_) +
+_v_ = *vcross*(_v~1~_, _v~2~_) +
+_v_ = *vrotate*(_v~1~_, _<<quat, quat>>_) +
+[small]#_v_, _v~1~_, _v~2~_: <<vec3, vec3>>.#
+
+* _boolean_, _witness_ = *point_segment_dist2*(_P_, _a_, _b_) +
+_boolean_, _witness_ = *point_triangle_dist2*(_P_, _a_, _b_, _c_) +
+[small]#_P_, _a_, _b_, _c_, _witness_: <<vec3, vec3>>. +
+(_witness_ is _nil_ when the first returned value is _false_).#
+
+[[quat_utils]]
+== Quaternion utilities
+
+* _float_ = *qlen*(_q_) +
+_float_ = *qlen2*(_q_) +
+_q_ = *qcopy*(_q~1~_) +
+_q_ = *qnormalize*(_q~1~_) +
+_q_ = *qscale*(_q1_, _float_) +
+_q_ = *qmul*(_q~1~_, _q~2~_) +
+_q_ = *qinvert*(_q~1~_) +
+_q_ = *qset_angle_axis*(_angle_, _axis_) +
+[small]#_q_, _q~1~_, _q~2~_: <<quat, quat>>. +
+_angle_: _float_ (radians). +
+_axis_: <<vec3, vec3>>.#
+
